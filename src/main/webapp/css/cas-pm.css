@@ -1,0 +1,76 @@
+.forgot-pw {
+    font-size: 1.1em;   
+}
+a.change-pw {
+    min-height: 1.5em;
+    line-height: 2em;   
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #777777;
+    padding-left: 0.5em;
+}
+
+#cas #login .btn-reset {
+    border-right: solid 1px #ddd;
+    cursor: pointer;
+    cursor: hand;   
+}
+
+#cas #admin p {
+    margin: 1em 0 0.5em 0;
+    padding: 0;
+    font-size: 1.5em;
+}
+#cas #login .note, #cas #admin .note {
+    padding: 0 0 0 24px;
+    background:  url(../images/services/info.gif) left 1px no-repeat;
+    font-size: 1.1em;
+    margin: 1em 0;
+    width: 350px;
+}
+
+#cas #login.recaptcha-width {
+    width: 315px;
+}
+
+#cas #sidebar.recaptcha-width {
+    margin-left: 353px;
+}
+
+.useradmin {
+    clear:both; margin:18px 0; padding:20px 20px 20px 100px; font-size:10px; line-height:1.5;
+    background: url("../images/security.gif") no-repeat scroll 20px 18px rgb(210,233,252);
+    color: #003399;
+    overflow: hidden;
+    border:1px dotted #039;
+    width: 392px;
+    margin: 0 auto;
+    margin-top: 18px;
+}
+
+#content .useradmin h2, #content .expire h2 {
+    color: #000066; font-family:Georgia,"Times New Roman",Times,serif; font-size:18px; line-height:48px; font-weight:400; margin:0 18px 0 0; padding:0;
+}
+
+#content .expire h2 {
+    color: #D21033;
+    margin-top: 18px;
+}
+
+#cas #admin form {
+    background: none;
+    width: auto;
+}
+
+/*passwordToExpire*/
+
+.expire {
+    clear:both; margin:18px 0; padding:20px 20px 20px 100px; font-size:10px; line-height:1.5;
+    color: #003399;
+    overflow: hidden;
+    border:1px dotted #039;
+    width: 392px;
+    margin: 0 auto;
+    margin-top: 18px;
+    border:1px dotted #d21033; background:#fed url(../images/error.gif) no-repeat 20px 18px; color:#d21033; padding-bottom: 40px;
+}

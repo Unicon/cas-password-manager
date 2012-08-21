@@ -1,0 +1,253 @@
+#
+# Licensed to Jasig under one or more contributor license
+# agreements. See the NOTICE file distributed with this work
+# for additional information regarding copyright ownership.
+# Jasig licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file
+# except in compliance with the License.  You may obtain a
+# copy of the License at the following location:
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+
+##
+# Services Management Web UI Security
+server.name=http://localhost:8080
+server.prefix=${server.name}/cas
+cas.securityContext.serviceProperties.service=${server.prefix}/services/j_acegi_cas_security_check
+# Names of roles allowed to access the CAS service manager
+cas.securityContext.serviceProperties.adminRoles=ROLE_ADMIN
+cas.securityContext.casProcessingFilterEntryPoint.loginUrl=${server.prefix}/login
+cas.securityContext.ticketValidator.casServerUrlPrefix=${server.prefix}
+# IP address or CIDR subnet allowed to access the /status URI of CAS that exposes health check information
+cas.securityContext.status.allowedSubnet=127.0.0.1
+
+cas.themeResolver.defaultThemeName=cas-theme-default
+cas.viewResolver.basename=default_views
+
+##
+# Unique CAS node name
+# host.name is used to generate unique Service Ticket IDs and SAMLArtifacts.  This is usually set to the specific
+# hostname of the machine running the CAS node, but it could be any label so long as it is unique in the cluster.
+host.name=cas01.example.org
+
+##
+# Database flavors for Hibernate
+#
+# One of these is needed if you are storing Services or Tickets in an RDBMS via JPA.
+#
+# database.hibernate.dialect=org.hibernate.dialect.OracleDialect
+# database.hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+# database.hibernate.dialect=org.hibernate.dialect.HSQLDialect
+
+##
+# Single Sign-On Session Timeouts
+# Defaults sourced from WEB-INF/spring-configuration/ticketExpirationPolices.xml
+#
+# Maximum session timeout - TGT will expire in maxTimeToLiveInSeconds regardless of usage
+# tgt.maxTimeToLiveInSeconds=28800
+#
+# Idle session timeout -  TGT will expire sooner than maxTimeToLiveInSeconds if no further requests
+# for STs occur within timeToKillInSeconds
+# tgt.timeToKillInSeconds=7200
+
+##
+# Service Ticket Timeout
+# Default sourced from WEB-INF/spring-configuration/ticketExpirationPolices.xml
+#
+# Service Ticket timeout - typically kept short as a control against replay attacks, default is 10s.  You'll want to
+# increase this timeout if you are manually testing service ticket creation/validation via tamperdata or similar tools
+st.timeToKillInSeconds=60
+
+##
+# Single Logout Out Callbacks
+# Default sourced from WEB-INF/spring-configuration/argumentExtractorsConfiguration.xml
+#
+# To turn off all back channel SLO requests set slo.disabled to true
+# slo.callbacks.disabled=false
+
+##
+# Log4j
+# Default sourced from WEB-INF/spring-configuration/log4jConfiguration.xml:
+#
+# It is often time helpful to externalize log4j.xml to a system path to preserve settings between upgrades.
+# e.g. log4j.config.location=/etc/cas/log4j.xml
+# log4j.config.location=classpath:log4j.xml
+#
+# log4j refresh interval in millis
+# log4j.refresh.interval=60000
+
+# == LDAP Authentication settings ==
+
+#Example: sAMAccountName=%u
+ldap.authentication.filter=sAMAccountName=%u
+
+#Comma-separated list of server urls (i.e. ldap://1.2.3.4)
+ldap.authentication.server.urls=ldaps://host.domain.net:636
+
+#Ldap Base DNs based on the context for query execution (i.e.
+ldap.authentication.basedn=cn=Users,dc=host,dc=domain,dc=net
+
+#Manager credentials to bind (i.e. cn=manager,cn=users,dc=school,dc=edu/password)
+ldap.authentication.manager.userdn=cn=Administrator,cn=Users,dc=host,dc=domain,dc=net
+ldap.authentication.manager.password=MyVerySecurePassword
+
+#Ignore the exception if LDAP query returned more than one item
+# (set to true for AD, false for OpenLDAP)
+ldap.authentication.ignorePartialResultException=true
+
+ldap.authentication.jndi.connect.timeout=3000
+ldap.authentication.jndi.read.timeout=3000
+ldap.authentication.jndi.security.level=simple
+
+# == LDAP Context Pooling settings ==
+
+ldap.authentication.pool.minIdle=3
+ldap.authentication.pool.maxIdle=5
+ldap.authentication.pool.maxSize=10
+
+# Maximum time in ms to wait for connection to become available
+# under pool exhausted condition.
+ldap.authentication.pool.maxWait=10000
+
+# == Evictor configuration ==
+
+# Period in ms at which evictor process runs.
+ldap.authentication.pool.evictionPeriod=600000
+
+# Maximum time in ms at which connections can remain idle before
+# they become liable to eviction.
+ldap.authentication.pool.idleTime=1200000
+
+# == Connection testing settings ==
+
+# Set to true to enable connection liveliness testing on evictor
+# process runs.  Probably results in best performance.
+ldap.authentication.pool.testWhileIdle=true
+
+# Set to true to enable connection liveliness testing before every
+# request to borrow an object from the pool.
+ldap.authentication.pool.testOnBorrow=false
+
+# ======================================================
+# == LDAP Password Policy Enforcement (LPPE) settings ==
+# ======================================================
+
+#Warn all users of expiration date regardless of warningDays value
+ldap.authentication.lppe.warnAll=false
+
+#Date format for value from dateAttribute see http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
+#Change value to 'ActiveDirectory' or 'AD' when using AD
+#ldap.authentication.lppe.dateFormat=yyyyMMddHHmmss'Z'
+ldap.authentication.lppe.dateFormat=AD
+
+#LDAP attribute that stores the last password change time
+#Change value to 'pwdlastset' or 'lastlogon' when using AD
+#ldap.authentication.lppe.dateAttribute=passwordchangedtime
+ldap.authentication.lppe.dateAttribute=accountExpires
+
+#The attribute that contains the data that will determine if password warning is skipped
+ldap.authentication.lppe.noWarnAttribute=
+
+#The list of values that will cause password warning to be bypassed
+#If the value retrieved for the attribute above matches the elements defined below, password warning will be bypassed.
+#LPPE automatically checks for 'never' used by ActiveDirectory
+ldap.authentication.lppe.noWarnValues=
+
+#LDAP attribute that stores the user's personal setting for the number of days to warn before expiration
+ldap.authentication.lppe.warningDaysAttribute=passwordwarningdays
+
+#LDAP attribute that stores the custom setting for the number of days a password is valid
+#ldap.authentication.lppe.validDaysAttribute=passwordexpiredays
+ldap.authentication.lppe.validDaysAttribute=maxPwdAge
+
+#Default value used if warningDaysAttribute is not found
+ldap.authentication.lppe.warningDays=30
+
+#Default value used if validDaysAttribute is not found
+ldap.authentication.lppe.validDays=0
+
+#Url to which the user will be redirected to change the password. Set to "pm" to
+#invoke Password Manager flow.
+#ldap.authentication.lppe.password.url=https://password.example.edu/change
+ldap.authentication.lppe.password.url=pm
+
+
+# ======================================================
+# ==           Password Manager settings              ==
+# ======================================================
+
+# default security question #1
+ldap.pm.question.default.1=What is your student/employee ID number?
+# LDAP attribute containing answer to default question #1
+ldap.pm.answer.attr.default.1=personId
+
+# default security question #2
+ldap.pm.question.default.2=What is your date of birth? (mm/dd/yyyy)
+# LDAP attribute containing answer to default question #2
+ldap.pm.answer.attr.default.2=personDob
+
+# Set to false to disable custom security questions (the next two parameters)
+ldap.pm.custom-question.required=true
+
+# LDAP attribute containing user-specified security question
+ldap.pm.question.attr=securityQuestion
+# LDAP attribute containing user-specified security answer
+ldap.pm.answer.attr=securityAnswer
+
+# LDAP server type. Value is either org.jasig.cas.pm.ldap.ActiveDirectoryLdapServer
+# or org.jasig.cas.pm.ldap.OpenLdapLdapServer
+ldap.pm.server.class=org.jasig.cas.pm.ldap.ActiveDirectoryLdapServer
+
+# The attribute that holds the account username/NetID
+ldap.pm.username.attr=sAMAccountName
+
+# The attribute that holds the user passwords. This is usually unicodePwd
+# for AD and userPassword for OpenLDAP.
+ldap.pm.password.attr=unicodePwd
+
+# An optional description of the LDAP server. Used only for logging purposes.
+ldap.pm.server.description=
+
+# ReCAPTCHA keys. Sign up at http://www.google.com/recaptcha.
+ldap.pm.recaptcha.key.public=<recaptcha public key>
+ldap.pm.recaptcha.key.private=<recaptcha private key>
+
+# The number of attempts a user is allowed to answer the security questions
+ldap.pm.lockout.incorrect-attempts=999999
+
+# The number of seconds the user is locked out after answering the security
+# questions incorrectly too many times
+ldap.pm.lockout.incorrect-attempts.lockout-seconds=0
+
+# OpenLDAP Example
+# optional description of LDAP server (for logging purposes)
+#pm.ldap.server.description=Primary OpenLDAP Server
+
+# Java class of server implementation. Options are:
+#  1. org.jasig.cas.pm.ldap.OpenLdapLdapServer
+#  2. org.jasig.cas.pm.ldap.ActiveDirectoryLdapServer
+#pm.ldap.server.class=org.jasig.cas.pm.ldap.OpenLdapLdapServer
+
+# LDAP attribute containing username to match
+#pm.ldap.server.username.attr=cn
+
+# LDAP attribute containing user password
+#pm.ldap.server.password.attr=userPassword
+
+# Search that authentication handler will perform. Substitute %u for username.
+# Will most likely be <usernameAttr>=%u
+#pm.ldap.server.auth.filter=cn=%u
+
+# Optional LDAP encryption algorithm. Applicable to only OpenLdapLdapServer.
+# You must also uncomment the "encryptionAlgorithm" property in
+# passwordManagerContext.xml if you use this parameter!  If you don't,
+# passwords will be stored unencrypted in OpenLDAP.
+#pm.ldap.server.openldap.encryption-algorithm=SHA
