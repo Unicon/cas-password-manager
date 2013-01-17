@@ -202,9 +202,9 @@ ldap.pm.question.attr=securityQuestion
 # LDAP attribute containing user-specified security answer
 ldap.pm.answer.attr=securityAnswer
 
-# LDAP server type. Value is either org.jasig.cas.pm.ldap.ActiveDirectoryLdapServer
-# or org.jasig.cas.pm.ldap.OpenLdapLdapServer
-ldap.pm.server.class=org.jasig.cas.pm.ldap.ActiveDirectoryLdapServer
+# LDAP server type. Value is either net.unicon.cas.passwordmanager.ldap.ActiveDirectoryLdapServer
+# or net.unicon.cas.passwordmanager.ldap.OpenLdapLdapServer
+ldap.pm.server.class=net.unicon.cas.passwordmanager.ldap.ActiveDirectoryLdapServer
 
 # The attribute that holds the account username/NetID
 ldap.pm.username.attr=sAMAccountName
