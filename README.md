@@ -1,5 +1,8 @@
 # CAS Password Manager
 
+## NOTICE
+**THIS PROJECT IS NOT CURRENTLY MAINTAINED. It is built against old CAS version (3.5.0) and most probably will require a significant amount of effort to modernize and bring it up to date with the current versions of CAS**
+
 * Drew Mazurek <dmazurek@unicon.net>
 * Drew Wills <awills@unicon.net>
 * Unicon, Inc.
